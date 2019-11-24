@@ -136,9 +136,9 @@ public class OVRControllerHelper : MonoBehaviour
 			{
 				m_modelOculusGoController.SetActive(controllerConnected && (activeControllerType == ControllerType.Go));
 				m_modelGearVrController.SetActive(controllerConnected && (activeControllerType != ControllerType.Go));
-				m_modelOculusTouchQuestAndRiftSLeftController.SetActive(false);
-				m_modelOculusTouchQuestAndRiftSRightController.SetActive(false);
-				m_modelOculusTouchRiftLeftController.SetActive(false);
+                m_modelOculusTouchQuestAndRiftSLeftController.SetActive(false);              //수정
+				m_modelOculusTouchQuestAndRiftSRightController.SetActive(false);             //수정
+                m_modelOculusTouchRiftLeftController.SetActive(false);
 				m_modelOculusTouchRiftRightController.SetActive(false);
 			}
 			else if (activeControllerType == ControllerType.QuestAndRiftS)

@@ -20,47 +20,47 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Body_Suit_Army
-    second: {fileID: 2100000, guid: b09ef116f3696a046b97b663228fb342, type: 2}
+    second: {fileID: 2100000, guid: 1115fc5a32529cb46893eb967643be24, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Body_Suit_Army_BackPack_BackPack
-    second: {fileID: 2100000, guid: 2a6020a1f03bc43409db7db2a85b1479, type: 2}
+    second: {fileID: 2100000, guid: 56e131fd636f94b4f94cbaa2ffdd3119, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Body_Suit_Army_Belt_Belt
-    second: {fileID: 2100000, guid: e10dd2db11fed294ba7ffe91837ce3de, type: 2}
+    second: {fileID: 2100000, guid: c5e8f42381a7e1943a0cb4171dad0d6b, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Body_Suit_Army_Bottle_Gourd
-    second: {fileID: 2100000, guid: 537d769e5a742ca4da57cecf48b62798, type: 2}
+    second: {fileID: 2100000, guid: 7acba9d258729454ab064a884df16353, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Body_Suit_Army_PocketFront_PocketFront
-    second: {fileID: 2100000, guid: d3ba5af1405171044b71e69ad87eedf3, type: 2}
+    second: {fileID: 2100000, guid: a1dd67393066f474f8c328102d305149, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Body_Suit_Army_PocketSide_PocketSide
-    second: {fileID: 2100000, guid: ed8c594141caa78439b1c2fc00eddb3c, type: 2}
+    second: {fileID: 2100000, guid: 0e38107d01012db40a5e157b82bf12fa, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: EyeL_EyeballL_EyeballL
-    second: {fileID: 2100000, guid: 38e33d1a993cec747887f05469abd5f1, type: 2}
+    second: {fileID: 2100000, guid: bfaa98ad85cd7b04e94610683652f61a, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: EyeR_EyeballR_EyeballR
-    second: {fileID: 2100000, guid: 1e64987eeb3573b4a9935bd959abd8f5, type: 2}
+    second: {fileID: 2100000, guid: d9d2968c47d708541bb8c43973bb8f82, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Head_Hair_ArmyHelmet
-    second: {fileID: 2100000, guid: 0a7e3dd36e6984f48a481eca2d595c36, type: 2}
+    second: {fileID: 2100000, guid: c4f5a5a5571b44645b4855e9996f6199, type: 2}
   materials:
     importMaterials: 1
     materialName: 3
@@ -94,7 +94,7 @@ ModelImporter:
       internalID: 1827226128182048838
       firstFrame: 0
       lastFrame: 40
-      wrapMode: 2
+      wrapMode: 0
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0

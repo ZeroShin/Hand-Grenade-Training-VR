@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/GrapScene.unity
+    path: Assets/00.Scenes/New Folder/Title.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
+  - enabled: 1
+    path: Assets/00.Scenes/New Folder/Main.unity
+    guid: 2e1336748f3797f4798cf9e588e2620f
   m_configObjects: {}

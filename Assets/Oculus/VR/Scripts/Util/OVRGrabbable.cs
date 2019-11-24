@@ -26,8 +26,15 @@ public class OVRGrabbable : MonoBehaviour
     public float fire_delay = 2.0f;
     //폭팔 오브젝트
     public GameObject explosionEffect;
+
+    //수류탄 핀 제거 사운드
+    public AudioClip PullPin, DropPin;          //HJ
+    AudioSource audio;                          //HJ
+
     //bool 타입으로 폭팔제어
     bool hasExploded = false;
+    //폭탄 던지는 속도
+    public float speed = 3.0f;
 
     [SerializeField]
     protected bool m_allowOffhandGrab = true;
@@ -43,6 +50,20 @@ public class OVRGrabbable : MonoBehaviour
     protected bool m_grabbedKinematic = false;
     protected Collider m_grabbedCollider = null;
     protected OVRGrabber m_grabbedBy = null;
+    //양손을 따로 사용하기 위해서 선언해주었다.
+    protected OVRGrabber1 m_grabbedBy1 = null;
+
+    //안전핀과 안전 클립을 따로 하기 위해서 사용
+    public GameObject Clip;
+    public GameObject Pin;
+
+    private GameObject pinObj;                  //HJ
+    private GameObject clipObj;                 //HJ
+
+    //핀과 클립이 있는지를 파악해주기 위해서 사용함. 조건문 사용을 위해서 default를 false로 사용.
+    //public bool pinCheck = true;
+    //public bool clipCheck = false;
+    //작동이 안되용..ㅠㅠ
 
     /// <summary>
     /// If true, the object can currently be grabbed.
@@ -58,6 +79,11 @@ public class OVRGrabbable : MonoBehaviour
     public bool isGrabbed
     {
         get { return m_grabbedBy != null; }
+    }
+
+    public bool isGrabbed1
+    {
+        get { return m_grabbedBy1 != null; }
     }
 
     /// <summary>
@@ -90,6 +116,10 @@ public class OVRGrabbable : MonoBehaviour
     public OVRGrabber grabbedBy
     {
         get { return m_grabbedBy; }
+    }
+    public OVRGrabber1 grabbedBy1
+    {
+        get { return m_grabbedBy1; }
     }
 
     /// <summary>
@@ -124,6 +154,35 @@ public class OVRGrabbable : MonoBehaviour
         m_grabbedBy = hand;
         m_grabbedCollider = grabPoint;
         gameObject.GetComponent<Rigidbody>().isKinematic = true;
+
+        audio.PlayOneShot(PullPin, 0.7f);       //HJ
+        pinObj.AddComponent<Outline>();         //HJ
+        clipObj.AddComponent<Outline>();        //HJ
+
+    }
+
+    virtual public void GrabBegin1(OVRGrabber1 hand, Collider grabPoint)
+    {
+        //핀태그와 클립태그로 인해서 서로 다른 상황을 연출하도록 한다.
+        if (Pin.tag == grabPoint.tag)
+        {
+            m_grabbedBy1 = hand;
+            m_grabbedCollider = grabPoint;
+            gameObject.GetComponent<Rigidbody>().isKinematic = true;
+            OVRInput.SetControllerVibration(0.8f, 0.5f, OVRInput.Controller.LTouch);
+            // 핀과 클립이 제거됨을 확인한다.
+            //pinCheck = true;
+        }
+        if (Clip.tag == grabPoint.tag)
+        {
+            m_grabbedBy1 = hand;
+            m_grabbedCollider = grabPoint;
+            gameObject.GetComponent<Rigidbody>().isKinematic = true;
+            Clip.transform.SetParent(null);
+            OVRInput.SetControllerVibration(0.8f, 0.5f, OVRInput.Controller.RTouch);
+            // 핀과 클립이 제거됨을 확인한다.
+            //clipCheck = true;
+        }
     }
 
     /// <summary>
@@ -133,17 +192,23 @@ public class OVRGrabbable : MonoBehaviour
     {
         Rigidbody rb = gameObject.GetComponent<Rigidbody>();
         rb.isKinematic = m_grabbedKinematic;
-        rb.velocity = linearVelocity;
+        rb.velocity = linearVelocity * speed;
         rb.angularVelocity = angularVelocity;
         m_grabbedBy = null;
         m_grabbedCollider = null;
-        // delay 이후 Explode를 실행한다.
+        // 차일드에 핀과 클립이 없을 경우에만 터지도록 유도한다.(실험중)
         Invoke("Explode", fire_delay);
-
+        //if (pinCheck)
+        //{
+        //    // delay 이후 Explode를 실행한다.
+        //    //Invoke("Explode", fire_delay);
+        //}   
     }
 
     void Awake()
     {
+        audio = GetComponent<AudioSource>();                //HJ
+
         if (m_grabPoints.Length == 0)
         {
             // Get the collider from the grabbable
@@ -163,6 +228,14 @@ public class OVRGrabbable : MonoBehaviour
         //m_grabbedKinematic = GetComponent<Rigidbody>().isKinematic;
         //테스트용 폭팔코드
         //Invoke("Explode", fire_delay);
+        Clip = GameObject.FindWithTag("Clip");
+        Pin = GameObject.FindWithTag("Pin");
+
+        //audio = GetComponent<AudioSource>();                //HJ
+
+        pinObj = GameObject.Find("Grenade_Safety_Pin");     //HJ
+        clipObj = GameObject.Find("Grenade_Safetyclip");    //HJ
+
     }
 
     void OnDestroy()
@@ -177,7 +250,24 @@ public class OVRGrabbable : MonoBehaviour
     void Explode()
     {
         Instantiate(explosionEffect, transform.position, transform.rotation);
+        // 폭탄이 터진다면 진동울리게 함. 주파수, 진폭 ( 0~1사이값을 받는다), 진동컨트롤러(양손동시 선언 안됨)
+        OVRInput.SetControllerVibration(1, 1, OVRInput.Controller.RTouch);
+        OVRInput.SetControllerVibration(1, 1, OVRInput.Controller.LTouch);
+
         Destroy(gameObject);
         hasExploded = true;
     }
+
+    void OnCollisionEnter(Collision col)   //HJ
+    {
+        if (col.gameObject.tag == "FLOOR")
+        {
+            Debug.Log(audio);
+            audio.PlayOneShot(DropPin, 0.7f);
+
+        }
+
+    }
+
+
 }
